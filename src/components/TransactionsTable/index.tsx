@@ -1,28 +1,13 @@
-import { useEffect, useState } from "react";
-import { api } from "../../services/api";
+
+
+import { useTransaction } from "../../hooks/useTransactions";
 import { Container } from "./styles";
 
-interface Transaction {
-    id: number;
-    item: string;
-    amount: number;
-    type: string;
-    category: string;
-    createdAt: string;
-}
 
 export function TransactionsTable() {
-    const [transactions, setTransactions] = useState<Transaction[]>([])
-
+    const {transactions} = useTransaction()
     const userLocale = Intl.DateTimeFormat().resolvedOptions().locale
 
-
-    useEffect(() => {
-        api.get('transactions')
-        .then(response => setTransactions(response.data.transactions))
-        .catch(error => console.log(error))
-    }, [])
-    console.log(Intl.NumberFormat(userLocale).resolvedOptions().unit)
     return(
         <Container>
             <table>
